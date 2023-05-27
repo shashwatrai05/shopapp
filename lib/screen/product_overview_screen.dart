@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/providers/cart.dart';
+import 'package:shopapp/screen/cart_screen.dart';
 //import 'package:provider/provider.dart';
 //import 'package:shopapp/providers/product.dart';
 import '../widgets/products_grid.dart';
-import 'package:shopapp/widgets/badge.dart';
+import '../widgets/badge.dart';
 
 
 
@@ -41,23 +42,25 @@ else{
 
           },
           
-          icon: Icon(Icons.more_vert),
+          icon: const Icon(Icons.more_vert),
           itemBuilder: (_) =>[
-            PopupMenuItem(child: Text('Only Favourite'),value:FilterOptions.Favorite),
-            PopupMenuItem(child: Text('Show More'), value:FilterOptions.All)
+            const PopupMenuItem(child: Text('Only Favourite'),value:FilterOptions.Favorite),
+            const PopupMenuItem(child: Text('Show More'), value:FilterOptions.All)
           ] ,
           ),
           Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(
+            builder: (_, cart, ch) => Badgee(
                   child: ch,
                   value: cart.itemCount.toString(),
                   color: Colors.red,
                 ) ,
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
             ),
           ),
         ],
