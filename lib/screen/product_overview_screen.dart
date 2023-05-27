@@ -4,7 +4,7 @@ import 'package:shopapp/providers/cart.dart';
 //import 'package:provider/provider.dart';
 //import 'package:shopapp/providers/product.dart';
 import '../widgets/products_grid.dart';
-import '../widgets/badge.dart';
+import 'package:shopapp/widgets/badge.dart';
 
 
 
@@ -46,13 +46,13 @@ else{
             PopupMenuItem(child: Text('Only Favourite'),value:FilterOptions.Favorite),
             PopupMenuItem(child: Text('Show More'), value:FilterOptions.All)
           ] ,
-          
           ),
           Consumer<Cart>(
-            builder: (_, cart, ch) =>Badge(
+            builder: (_, cart, ch) => Badge(
                   child: ch,
                   value: cart.itemCount.toString(),
-                ),
+                  color: Colors.red,
+                ) ,
             child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
