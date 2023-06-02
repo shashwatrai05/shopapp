@@ -5,6 +5,8 @@ import 'package:shopapp/providers/product.dart';
 import 'package:shopapp/screen/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
+  
+
  //final String id;
  //final String title;
  //final String imageUrl;
@@ -35,7 +37,7 @@ class ProductItem extends StatelessWidget {
                   product.togglefavouriteScreen();
                 }, 
       
-                color:Theme.of(context).accentColor,
+                color:Theme.of(context).colorScheme.secondary,
                 icon: Icon(product.isFavourite? Icons.favorite:Icons.favorite_border_outlined),
                 ),
                 
@@ -49,8 +51,8 @@ class ProductItem extends StatelessWidget {
                     cart.additem(product.id, product.price, product.title);
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content:Text('Added Item to Cart'),
-                    duration: Duration(seconds: 2),
+                    content:const Text('Added Item to Cart'),
+                    duration: const Duration(seconds: 2),
                     action: SnackBarAction(label:'Undo', onPressed: (){
                       cart.removeSingleItem(product.id);
                     }),
@@ -60,7 +62,7 @@ class ProductItem extends StatelessWidget {
                    
                   }, 
                   icon: const Icon(Icons.shopping_cart),
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             ),

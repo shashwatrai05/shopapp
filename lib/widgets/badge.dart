@@ -6,7 +6,7 @@ class Badgee extends StatelessWidget {
     @required this.child,
     @required this.value,
     this.color,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final String value;
@@ -26,7 +26,7 @@ class Badgee extends StatelessWidget {
             // color: Theme.of(context).accentColor,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color: color != null ? color : Theme.of(context).accentColor,
+              color: color ?? Theme.of(context).colorScheme.secondary,
             ),
             constraints: const BoxConstraints(
               minWidth: 16,

@@ -11,11 +11,12 @@ import '../widgets/badge.dart';
 
 
 enum FilterOptions{
-  Favorite,
-  All,
+  favorite,
+  all,
 }
 
 class ProductOverviewScreen extends StatefulWidget {
+
   
   @override
   State<ProductOverviewScreen> createState() => _ProductOverviewScreenState();
@@ -32,7 +33,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         actions: <Widget>[
           PopupMenuButton(onSelected: (FilterOptions selectedValue){
             setState(() {
-              if(selectedValue==FilterOptions.Favorite){
+              if(selectedValue==FilterOptions.favorite){
 _showOnlyFavorites=true;
 }
 else{
@@ -45,8 +46,8 @@ else{
           
           icon: const Icon(Icons.more_vert),
           itemBuilder: (_) =>[
-            const PopupMenuItem(child: Text('Only Favourite'),value:FilterOptions.Favorite),
-            const PopupMenuItem(child: Text('Show More'), value:FilterOptions.All)
+            const PopupMenuItem(child: Text('Only Favourite'),value:FilterOptions.favorite),
+            const PopupMenuItem(child: Text('Show More'), value:FilterOptions.all)
           ] ,
           ),
           Consumer<Cart>(
@@ -66,7 +67,7 @@ else{
           ),
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }

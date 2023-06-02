@@ -7,6 +7,8 @@ import './screen/product_overview_screen.dart';
 import './providers/products.dart';
 import 'package:provider/provider.dart';
 import './providers/cart.dart';
+import './screen/user_products_screen.dart';
+import './screen/edit_product_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,18 +27,18 @@ ChangeNotifierProvider(
       child: MaterialApp(
         title: 'MyShop',
         theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
+          fontFamily: 'Lato', colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(secondary: Colors.deepOrange),
         ),
         home: ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName:(ctx) => ProductDetailScreen(),
           CartScreen.routeName:(ctx)=> CartScreen(),
           OrdersScreen.routeName:(ctx)=>OrdersScreen(),
+          UserProductsScreen.routeName:(ctx)=>UserProductsScreen(),
+          EditProductScreen.routeName:(ctx)=>EditProductScreen(),
         },
       ),
     );
   }
 }
-
+ 
