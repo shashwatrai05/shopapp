@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final List<Product> _items = [
+  List<Product> _items = [
+    /*
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -37,6 +38,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
+    */
   ];
 
 //var _showFavoritesOnly=false;
@@ -65,17 +67,41 @@ void showAll(){
   notifyListeners();
 }
 */
-  String get id => null;
+  //String get id => null;
 
-  String get title => null;
+  //String get title => null;
 
-  String get imageUrl => null;
+  //String get imageUrl => null;
+  /*
+  Future<void> fetchAndSetProducts() async {
+    const url =
+        'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+            id: prodId,
+            title: prodData['title'],
+            description: prodData['description'],
+            price: prodData['price'],
+            imageUrl: prodData['imageUrl'],
+            isFavourite: prodData['isFavourite']));
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
 
   Future<void> addProduct(Product product) async {
+    const url =
+          'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json';
     try {
-      const url =
-          'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products';
-      final response = await http.post(Uri.parse(url),
+      
+          final response = await http.post(Uri.parse(url),
           body: json.encode({
             'title': product.title,
             'description': product.description,
@@ -98,6 +124,58 @@ void showAll(){
     }
     //print(error);
     //throw error;
+  }
+*/
+Future<void> fetchAndSetProducts() async {
+    const url = 'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          isFavourite: prodData['isFavourite'],
+          imageUrl: prodData['imageUrl'],
+        ));
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<void> addProduct(Product product) async {
+    const url = 'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json';
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavourite': product.isFavourite,
+        }),
+      );
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

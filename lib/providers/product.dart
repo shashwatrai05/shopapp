@@ -17,12 +17,12 @@ class Product with ChangeNotifier {
     this.isFavourite = false,
   });
 
-  void togglefavouriteScreen() {
+  void togglefavouriteStatus() {
     isFavourite = !isFavourite;
     notifyListeners();
   }
 
-  void showFavoritesOnly() {}
+  //void showFavoritesOnly() {}
 
-  void showAll() {}
+  //void showAll() {}
 }
