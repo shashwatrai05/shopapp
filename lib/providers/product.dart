@@ -1,4 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+//import 'package:shopapp/models/http_exception.dart';
+
 
 class Product with ChangeNotifier {
   final String id;
@@ -16,11 +20,31 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
     this.isFavourite = false,
   });
-
+/*
   void togglefavouriteStatus() {
     isFavourite = !isFavourite;
     notifyListeners();
   }
+  */
+  void toggleFavouriteStatus() {
+  final oldStatus = isFavourite;
+  isFavourite = !isFavourite;
+  notifyListeners();
+
+  try {
+    final url = 'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products/$id.json';
+    http.patch(
+      Uri.parse(url),
+      body: json.encode({
+        'isFavorite': isFavourite,
+      }),
+    );
+  } catch (error) {
+    isFavourite = oldStatus;
+    notifyListeners();
+  }
+}
+
 
   //void showFavoritesOnly() {}
 
