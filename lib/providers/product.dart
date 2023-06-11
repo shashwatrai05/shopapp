@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 //import 'package:shopapp/models/http_exception.dart';
 
-
 class Product with ChangeNotifier {
   final String id;
   final String title;
@@ -26,25 +25,28 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
   */
-  void toggleFavouriteStatus() {
-  final oldStatus = isFavourite;
-  isFavourite = !isFavourite;
-  notifyListeners();
-
-  try {
-    final url = 'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products/$id.json';
-    http.patch(
-      Uri.parse(url),
-      body: json.encode({
-        'isFavorite': isFavourite,
-      }),
-    );
-  } catch (error) {
-    isFavourite = oldStatus;
+  Future<void> toggleFavouriteStatus() async {
+    final oldStatus = isFavourite;
+    isFavourite = !isFavourite;
     notifyListeners();
+    final url =
+        'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products/$id.json';
+    try {
+      final response = await http.patch(
+        Uri.parse(url),
+        body: json.encode({
+          'isFavorite': isFavourite,
+        }),
+      );
+      if (response.statusCode >= 400) {
+        isFavourite = oldStatus;
+        notifyListeners();
+      }
+    } catch (error) {
+      isFavourite = oldStatus;
+      notifyListeners();
+    }
   }
-}
-
 
   //void showFavoritesOnly() {}
 
