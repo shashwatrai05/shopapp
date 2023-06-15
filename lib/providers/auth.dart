@@ -80,7 +80,7 @@ class Auth with ChangeNotifier {
     }
     final extractedUserData =
         json.decode(prefs.getString('userData')) as Map<String, Object>;
-    final expiryDate = DateTime.parse(extractedUserData['expirtDate']);
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
