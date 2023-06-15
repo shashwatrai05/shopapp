@@ -78,9 +78,10 @@ void showAll(){
 
   //String get imageUrl => null;
 
-  Future<void> fetchAndSetProducts() async {
+ Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json?auth=$authTokens';
+        'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json?auth=$authTokens&$filterString';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -89,8 +90,8 @@ void showAll(){
       }
       url =
           'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/userFavourite/$userId.json?auth=$authTokens';
-      final favouriteResponse = await http.get(Uri.parse(url));
-      final favouriteData = json.decode(favouriteResponse.body);
+      final favoriteResponse = await http.get(Uri.parse(url));
+      final favoriteData = json.decode(favoriteResponse.body);
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
@@ -98,9 +99,8 @@ void showAll(){
           title: prodData['title'],
           description: prodData['description'],
           price: prodData['price'],
-          isFavourite: favouriteResponse == null
-              ? false
-              : favouriteData[prodId] ?? false,
+          isFavourite:
+              favoriteData == null ? false : favoriteData[prodId] ?? false,
           imageUrl: prodData['imageUrl'],
         ));
       });
@@ -122,6 +122,7 @@ void showAll(){
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
+          'creatorId': userId,
         }),
       );
       final newProduct = Product(
