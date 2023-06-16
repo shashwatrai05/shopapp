@@ -78,7 +78,7 @@ void showAll(){
 
   //String get imageUrl => null;
 
- Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
     final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
         'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products.json?auth=$authTokens&$filterString';
@@ -110,6 +110,7 @@ void showAll(){
       throw (error);
     }
   }
+
 
   Future<void> addProduct(Product product) async {
     final url =
