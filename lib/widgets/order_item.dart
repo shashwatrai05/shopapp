@@ -7,8 +7,7 @@ class OrderItem extends StatefulWidget {
   final ord.OrderItem order;
 
   const OrderItem(
-    this.order,
-  );
+    this.order, {Key? key}) : super(key: key);
 
   @override
   State<OrderItem> createState() => _OrderItemState();
@@ -20,7 +19,7 @@ class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height:
           _expanded ? min(widget.order.products.length * 20.0 + 110, 200) : 95,
       child: Card(
@@ -41,7 +40,7 @@ class _OrderItemState extends State<OrderItem> {
               ),
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: _expanded
                   ? min(widget.order.products.length * 20.0 + 10, 100)

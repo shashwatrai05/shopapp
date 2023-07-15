@@ -14,28 +14,30 @@ import './screen/edit_product_screen.dart';
 import './screen/auth_screen.dart';
 import './helpers/custom_route.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => Auth()),
           ChangeNotifierProxyProvider<Auth, Products>(
-            create: (_) => Products(null, null, []),
+            create: (_) => Products('', '', []),
             update: (ctx, auth, previousProducts) => Products(
-              auth.token,
-              auth.userId,
+              auth.token!,
+              auth.userId!,
               previousProducts == null ? [] : previousProducts.items,
             ),
           ),
           ChangeNotifierProvider(create: (ctx) => Cart()),
           ChangeNotifierProxyProvider<Auth, Orders>(
-            create: (_) => Orders(null, null, []),
+            create: (_) => Orders('', '', []),
             update: (ctx, auth, previousOrders) => Orders(
-                auth.token,
-                auth.userId,
+                auth.token!,
+                auth.userId!,
                 previousOrders == null ? [] : previousOrders.orders),
           ),
         ],
@@ -52,21 +54,21 @@ class MyApp extends StatelessWidget {
                   .copyWith(secondary: Colors.deepOrange),
             ),
             home: auth.isAuth
-                ? ProductOverviewScreen()
+                ? const ProductOverviewScreen()
                 : FutureBuilder(
                     future: auth.tryAutoLogin(),
                     builder: (ctx, authResultSnapshot) =>
                         authResultSnapshot.connectionState ==
                                 ConnectionState.waiting
-                            ? SplashScreen()
-                            : AuthScreen(),
+                            ? const SplashScreen()
+                            : const AuthScreen(),
                   ),
             routes: {
-              ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-              CartScreen.routeName: (ctx) => CartScreen(),
-              OrdersScreen.routeName: (ctx) => OrdersScreen(),
-              UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-              EditProductScreen.routeName: (ctx) => EditProductScreen(),
+              ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
+              CartScreen.routeName: (ctx) => const CartScreen(),
+              OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+              UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
+              EditProductScreen.routeName: (ctx) => const EditProductScreen(),
             },
           ),
         ));

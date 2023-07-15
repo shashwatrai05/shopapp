@@ -15,6 +15,8 @@ enum FilterOptions {
 }
 
 class ProductOverviewScreen extends StatefulWidget {
+  const ProductOverviewScreen({Key? key}) : super(key: key);
+
   @override
   State<ProductOverviewScreen> createState() => _ProductOverviewScreenState();
 }
@@ -69,16 +71,18 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             icon: const Icon(Icons.more_vert),
             itemBuilder: (_) => [
               const PopupMenuItem(
-                  child: Text('Only Favourite'), value: FilterOptions.favorite),
+                  value: FilterOptions.favorite,
+                  child: Text('Only Favourite')),
               const PopupMenuItem(
-                  child: Text('Show More'), value: FilterOptions.all)
+                  value: FilterOptions.all,
+                  child: Text('Show More'))
             ],
           ),
           Consumer<Cart>(
             builder: (_, cart, ch) => Badgee(
-              child: ch,
               value: cart.itemCount.toString(),
               color: Colors.red,
+              child: ch!,
             ),
             child: IconButton(
               icon: const Icon(

@@ -7,9 +7,11 @@ class ProductDetailScreen extends StatelessWidget {
   //final double price;
   //ProductDetailScreen(this.title,this.price);
   static const routeName = '/productDetail';
+
+  const ProductDetailScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final productId = ModalRoute.of(context).settings.arguments as String;
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
     final loadedproduct =
         Provider.of<Products>(context, listen: false).findById(productId);
     return Scaffold(
@@ -55,7 +57,7 @@ class ProductDetailScreen extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 800,
             )
           ]))

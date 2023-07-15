@@ -85,6 +85,7 @@ void showAll(){
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      // ignore: unnecessary_null_comparison
       if (extractedData == null) {
         return;
       }
@@ -107,7 +108,7 @@ void showAll(){
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
-      throw (error);
+      rethrow;
     }
   }
 
@@ -138,7 +139,7 @@ void showAll(){
       notifyListeners();
     } catch (error) {
       print(error);
-      throw error;
+      rethrow;
     }
   }
 
@@ -166,14 +167,14 @@ void showAll(){
     final url =
         'https://shopping-app-ce5f7-default-rtdb.firebaseio.com/products/$id.json?auth=$authTokens';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
-    var existingProduct = _items[existingProductIndex];
+    Product? existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
     notifyListeners();
     final response = await http.delete(Uri.parse(url));
     if (response.statusCode >= 400) {
       _items.insert(existingProductIndex, existingProduct);
       notifyListeners();
-      throw HttpException('Could not delete product');
+      throw const HttpException('Could not delete product');
     }
     existingProduct = null;
   }

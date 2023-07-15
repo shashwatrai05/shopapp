@@ -6,7 +6,7 @@ import 'package:shopapp/screen/user_products_screen.dart';
 import '../helpers/custom_route.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({Key key}) : super(key: key);
+  const AppDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

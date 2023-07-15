@@ -10,7 +10,7 @@ class CartItem extends StatelessWidget {
   final String title;
 
   const CartItem(
-      this.id, this.productId, this.price, this.quantity, this.title);
+      this.id, this.productId, this.price, this.quantity, this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,16 @@ class CartItem extends StatelessWidget {
       key: ValueKey(id),
       background: Container(
         color: Theme.of(context).colorScheme.error,
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-          size: 40,
-        ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
+        ),
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 40,
         ),
       ),
       direction: DismissDirection.endToStart,
